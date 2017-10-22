@@ -16,20 +16,27 @@ function Request($request)
     
     set_time_limit(0);
     
-    if ($request['ws'] == '00') {
-        $content = userLogin($request);
-    } elseif ($request['ws'] == '01') {
-        $content = urls($request);
-    } elseif ($request['ws'] == '02') {
-        $content = promotionRequest($request);
-    } elseif ($request['ws'] == '03') {
-        $content = staff($request);
-    } elseif ($request['ws'] == '04') {
-        $content = report();
-    } elseif ($request['ws'] == '05') {
-        $content = userDash($request);
-    } else {
-        $content = 'Unknown request!';
+    switch ($request['ws']) {
+        case '00':
+            $content = userLogin($request);
+            break;
+        case '01':
+            $content = urls($request);
+            break;
+        case '02':
+            $content = promotionRequest($request);
+            break;
+        case '03':
+            $content = staff($request);
+            break;
+        case '04':
+            $content = report();
+            break;
+        case '05':
+            $content = userDash($request);
+            break;
+        default:
+            $content = 'Unknown request!';
     }
     
     return $content;
