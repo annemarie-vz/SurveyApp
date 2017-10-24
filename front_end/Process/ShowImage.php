@@ -24,12 +24,12 @@ ini_set("memory_limit","128M");
 	{
 		$query = "SELECT Image FROM image_path WHERE Call_ID = '".$thisCall."' ";
 		
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 
 		$result = '';
 
-		if($row = mysql_fetch_object($tableDB))
+		if($row = mysqli_fetch_object($tableDB))
 		{
 			$result = $row->Image;
 		}
