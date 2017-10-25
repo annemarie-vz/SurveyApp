@@ -14,38 +14,30 @@ include_once("include.php");
 <script src="JS/Default.js" type="text/javascript"></script>
 <title>Login</title>
 <?php callCSS();
-if(count($_POST))
-{
-	if($_POST['username'] != '')
-	{
-		if($_POST['password'] != '')
-		{
-			$data = array
-   			(
-				'ws'=>'00',
-				'var1'=>$_POST['username'],
-				'var2'=>$_POST['password'],
-				'var3'=>NULL,
-				'var4'=>NULL,
-				'var5'=>NULL,
-				'var6'=>NULL,
-				'var7'=>NULL
-			);
-			
-			$userLogin = Process($data);
+if (count($_POST) && $_POST['username'] != '' && $_POST['password'] != '') {
+    $data = array
+    (
+        'ws'=>'00',
+        'var1'=>$_POST['username'],
+        'var2'=>$_POST['password'],
+        'var3'=>NULL,
+        'var4'=>NULL,
+        'var5'=>NULL,
+        'var6'=>NULL,
+        'var7'=>NULL
+    );
 
+    $userLogin = Process($data);
 
-			if($userLogin->Status)
-			{
-				$_SESSION['User']['UserID']=$userLogin->User_ID;
-				$_SESSION['User']['Role'] = $userLogin->Role;
-				$_SESSION['User']['Name'] = $userLogin->Name;
-				$_SESSION['User']['Mobile'] = $userLogin->Mobile;
-				$_SESSION['User']['Username'] = $userLogin->Username;
-				$_SESSION['User']['Password'] = $userLogin->Password;
-			}
-		}
-	}
+    if($userLogin->Status)
+    {
+        $_SESSION['User']['UserID']=$userLogin->User_ID;
+        $_SESSION['User']['Role'] = $userLogin->Role;
+        $_SESSION['User']['Name'] = $userLogin->Name;
+        $_SESSION['User']['Mobile'] = $userLogin->Mobile;
+        $_SESSION['User']['Username'] = $userLogin->Username;
+        $_SESSION['User']['Password'] = $userLogin->Password;
+    }
 }
 if(isset($_SESSION['User']['Role']))
 {
