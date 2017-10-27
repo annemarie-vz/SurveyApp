@@ -473,3 +473,7 @@ table.reference .prototype
 input.w_auto{
 width: 100%;
 }
+
+.mb {
+ margin-bottom:20px;
+}
