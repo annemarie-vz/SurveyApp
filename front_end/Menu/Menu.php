@@ -9,35 +9,36 @@
 <link href="styles.css" rel="stylesheet" type="text/css" /> 
 </head>
 <body>
-        	<table id="managersMenu" cellpadding="0" cellspacing="0">
-            	<tr>
-                	<td align="center">
-                	<a href="javascript:adminProcedures();">Admin</a>
-                    </td>	            	
-                	<td align="center">
-                	<a href="javascript:loadNewPromotion();">New Promotion</a>
-                    </td>				
-                	<td align="center">
-                    	<a href="javascript:managePromotion();">Manage Promotions</a>
-                    </td>			
-                	<td align="center">
-                    	<a href="javascript:manageClients();">Surveys</a>
-                    </td> 
-                    <td align="center">
-                    <a href="javascript:GetDownloads();">Download</a>
-                    </td> 
-                	<td align="center">
-                    	<a href="javascript:manageClientsList();">Clients</a>
-                    </td> 
-      				<td align="center">
-                    	<a href="javascript:manageStores();">Stores</a>
-                    </td>                      
-                    <td align="center">
-                    	<a href="javascript:manageStaffInit();">Staff</a>
-                    </td>                  
-                    <td align="center">
-                    	<a href="logout.php">Logout</a>
-                    </td>                                       
-                </tr>
-			</table>
-		</td>
+    <table id="managersMenu" class="container">
+        <tr>
+            <div>
+                <a href="javascript:adminProcedures();">Admin</a>
+            </div>
+            <div>
+                <a href="javascript:loadNewPromotion();">New Promotion</a>
+            </div>
+            <div>
+                <a href="javascript:managePromotion();">Manage Promotions</a>
+            </div>
+            <div>
+                <a href="javascript:manageClients();">Surveys</a>
+            </div>
+            <div>
+            <a href="javascript:GetDownloads();">Download</a>
+            </div>
+            <div>
+                <a href="javascript:manageClientsList();">Clients</a>
+            </div>
+            <div>
+                <a href="javascript:manageStores();">Stores</a>
+            </div>
+            <div>
+                <a href="javascript:manageStaffInit();">Staff</a>
+            </div>
+            <div>
+                <a href="logout.php">Logout</a>
+            </div>
+        </tr>
+    </table>
+</body>
+</html>
