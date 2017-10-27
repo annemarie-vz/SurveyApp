@@ -1,11 +1,5 @@
 <?php 
 session_start();
-//Call Essentials
-/*
-include_once("essentials.php");
-
-if($_SESSION[Admin])
-{*/
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -19,7 +13,6 @@ if($_SESSION[Admin])
 <table id="managersTable" cellpadding="0" cellspacing="0" border=1>
 	<tr>
     	<td style="padding-bottom:5px">
-        	<!-- <a href="index.php"><img src="staticImages/logo.jpg" border="0" /></a> -->
         	<h2>CMS Builder 1.0</h2>
         </td>
     </tr>
@@ -47,7 +40,6 @@ if($_SESSION[Admin])
                     </td> 
       				<td align="center">
                     	<a href="javascript:manageStores();">Option</a>
-                    	<!-- <a href="http://www.outtouch.co.za/">Clients</a> -->
                     </td>                      
                     <td align="center">
                     	<a href="javascript:manageStaffInit();">Option</a>
@@ -92,11 +84,5 @@ if($_SESSION[Admin])
 		<?php 
 		unset($_SESSION[redirectArray]);
 	}
-/*}
-else
-{
-	Redirect("login.php");
-	//print $_SESSION[Admin]->ID;
-}*/
 ?>
 </body>

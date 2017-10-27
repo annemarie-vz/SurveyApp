@@ -9,7 +9,6 @@
 <link href="styles.css" rel="stylesheet" type="text/css" /> 
 </head>
 <body>
- <!--    	<td style="background-color:#072667">--> 
         	<table id="managersMenu" cellpadding="0" cellspacing="0">
             	<tr>
                 	<td align="center">
@@ -32,19 +31,13 @@
                     </td> 
       				<td align="center">
                     	<a href="javascript:manageStores();">Stores</a>
-                    	<!-- <a href="http://www.outtouch.co.za/">Clients</a> -->
                     </td>                      
                     <td align="center">
                     	<a href="javascript:manageStaffInit();">Staff</a>
                     </td>                  
-                    <!--<td align="center">
-                    	<a href="javascript:manageDuplicatesInit();">Duplicate Records</a>
-                    </td>  -->                                       
                     <td align="center">
                     	<a href="logout.php">Logout</a>
                     </td>                                       
                 </tr>
 			</table>
-			<!-- 
 		</td>
-    </tr> -->
