@@ -83,9 +83,9 @@ function listDatabases()
 {
 	$dbs = array();
 	$excl = array( "\$dbname");//"information_schema","mysql","phpmyadmin","webauth");
-	$res = mysql_query("SHOW DATABASES");
+	$res = mysqli_query("SHOW DATABASES");
 	
-	while ($row = mysql_fetch_assoc($res)) {
+	while ($row = mysqli_fetch_assoc($res)) {
 	    if(!in_array($row['Database'],$excl))
 	    {
 	    	if(!count($dbs))
@@ -105,15 +105,15 @@ function tableList($db, $DBCon)
 {
 	$tableList = array();
 	
-	$tables = mysql_list_tables($db, $DBCon);
+	$tables = mysqli_list_tables($db, $DBCon);
 	
-	for($i=0; $i < mysql_num_rows($tables); $i++)
+	for($i=0; $i < mysqli_num_rows($tables); $i++)
 	{
 	  if(!count($tableList))
       {
     	$tableList['NULL']='Select';
       }
-	  $tableList[mysql_tablename($tables, $i)]=mysql_tablename($tables, $i);
+	  $tableList[mysqli_tablename($tables, $i)]=mysqli_tablename($tables, $i);
 	}
 	return $tableList; 	
 }
@@ -200,7 +200,7 @@ function stockView()
 		
 	if($stock[0])
 	{
-		while($row = mysql_fetch_object($stock[1]))
+		while($row = mysqli_fetch_object($stock[1]))
 		{
 			$content .= '<tr><td><a class="decor" href="javascript:editStock('.$row->Stock_ID.');">'.$row->Stock_Description.'</a></td><td>'.$row->Stock_Code.'</td><td>'.$row->Economic_Batch_Quantity.'</td><td>'.$row->Lead_Days.'</td><td>'.$row->Buying_Rule.'</td><td>'.$row->Dock_to_Stock.'</td><td>'.$row->Stock_on_hold.'</td><td>'.$row->Safety_Stock_Quantity.'</td><td>'.$row->Maximum_Quantity.'</td><td>'.$row->Minimum_Quantity.'</td>';
 			$content .= '</tr>';
@@ -220,12 +220,12 @@ function getStock()
 {
    	$query = "SELECT * FROM stock ";
 	
-   	$tableDB = mysql_query($query)
-		or die(mysql_error().$query);
+   	$tableDB = mysqli_query($query)
+		or die(mysqli_error().$query);
 		
 	$stock = array();
 	
-	if(mysql_num_rows($tableDB))
+	if(mysqli_num_rows($tableDB))
 	{
 		$stock[0]=1;
 		$stock[1]=$tableDB;
@@ -268,14 +268,14 @@ function getStock()
    function checkUser($DBCon, $user, $pass)
    {
    		$query = "SELECT User_ID FROM user WHERE Username = '".$user."' AND Password = '".$pass."'  ";
-		$tableDB = mysql_query($query,$DBCon)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query,$DBCon)
+			or die(mysqli_error().$query);
 		
 		//session_start();
 			
-		if(mysql_num_rows($tableDB) > 0)
+		if(mysqli_num_rows($tableDB) > 0)
 		{
-			$row = mysql_fetch_object($tableDB);
+			$row = mysqli_fetch_object($tableDB);
 			$_SESSION['User']=$row->User_ID;
 		}
 		else 
@@ -288,14 +288,14 @@ function getStock()
    function getUserRole($DBCon)
    {
    		$query = "SELECT Role_ID FROM user_role WHERE User_ID = " . $_SESSION['User'];
-		$tableDB = mysql_query($query,$DBCon)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query,$DBCon)
+			or die(mysqli_error().$query);
 
 		$User_IDs = array();
 		
-		if(mysql_num_rows($tableDB) > 0)
+		if(mysqli_num_rows($tableDB) > 0)
 		{
-			if($row = mysql_fetch_object($tableDB))
+			if($row = mysqli_fetch_object($tableDB))
 			{
 				$User_IDs[]=$row->Role_ID; 
 			}
@@ -311,14 +311,14 @@ function getStock()
    function getUserSite($DBCon)
    {
    		$query = "SELECT Site_ID FROM user_site WHERE User_ID = " . $_SESSION['User'];
-		$tableDB = mysql_query($query,$DBCon)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query,$DBCon)
+			or die(mysqli_error().$query);
 
 		$Site_IDs = array();
 		
-		if(mysql_num_rows($tableDB) > 0)
+		if(mysqli_num_rows($tableDB) > 0)
 		{
-			if($row = mysql_fetch_object($tableDB))
+			if($row = mysqli_fetch_object($tableDB))
 			{
 				$Site_IDs[]=$row->Site_ID; 
 			}

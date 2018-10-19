@@ -9,8 +9,8 @@ $username = "";
 $password = "";
 $db = "";
 
-$DBCon = mysql_connect($host, $username, $password);
-mysql_select_db($db,$DBCon);
+$DBCon = mysqli_connect($host, $username, $password);
+mysqli_select_db($db,$DBCon);
 
 set_time_limit(0);	
 
@@ -61,12 +61,12 @@ function userLogin($ar)
 	extract($ar);
 
 	$query = "SELECT user.User_ID, user_role.Role, user.Username, user.Password, user_detail.Name, user_detail.Surname, user_detail.Mobile FROM user, user_detail, user_role WHERE user_detail.User_ID = user.User_ID AND user_role.User_Role_ID = user.User_Role_ID AND user.Username = '".$var1."' AND user.Password = '".$var2."'  ";
-		$tableDB = mysql_query($query)
-			or die($er = mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die($er = mysqli_error().$query);
 			
 	$result = new stdClass();
 					
-	if($row = mysql_fetch_object($tableDB))
+	if($row = mysqli_fetch_object($tableDB))
 	{
 		$result->Status = true;
 		$result->User_ID = $row->User_ID;
@@ -239,12 +239,12 @@ function urls($ar)
 	{		
 		$query = "SELECT  user_detail.User_ID, user_detail.Name, user_detail.Surname, user_detail.Mobile FROM user_detail,user WHERE user_detail.User_ID = user.User_ID AND user.User_Role_ID = 1 ";
 	
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
 		$content = array();
 		
-		while($row = mysql_fetch_object($tableDB))
+		while($row = mysqli_fetch_object($tableDB))
 		{	
 			 $content[$row->User_ID]=$row->Name . ' ' . $row->Surname;
 		}
@@ -254,15 +254,15 @@ function urls($ar)
 	function getUrlStaff($var2)
 	{
 		$query = "SELECT  user_detail.* FROM user_detail, staff_url WHERE staff_url.Url_ID = " . $var2. " AND staff_url.User_ID = user_detail.User_ID ";
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 		
-		if(mysql_num_rows($tableDB) > 0)
+		if(mysqli_num_rows($tableDB) > 0)
 		{
 			$content = "<table width=100% class='reference'><tbody>";
 			$content .= '<tr><th>Name</th><th>Surname</th><th>Mobile</th><th colspan=1></th></tr>';		
 			
-			while($row = mysql_fetch_object($tableDB))
+			while($row = mysqli_fetch_object($tableDB))
 			{
 				$content .= '<tr><td>'.$row->Name.'</td><td>'.$row->Surname.'</td><td>'.$row->Mobile.'</td><td><a href="javascript:void(0)" onclick="promotionRequest('."'promotionRequest'".','."'urlStaff'".','.$var2.','."'delete'".','.$row->User_ID.');" class="">Delete</a></td></tr>';
 			}	
@@ -283,10 +283,10 @@ function urls($ar)
    {
 	   $query = "SELECT  Name FROM url WHERE Url_ID = " . $var2;	
 		
-	   $tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+	   $tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 
-		if($row = mysql_fetch_object($tableDB))
+		if($row = mysqli_fetch_object($tableDB))
 		{
 			return $row->Name;
 		}
@@ -301,10 +301,10 @@ function urls($ar)
 	{
 		$query = "SELECT * FROM url WHERE Url_ID = '".$Url_ID."' LIMIT 1 ";	
 		
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);	
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
-		if($row = mysql_fetch_object($tableDB))	
+		if($row = mysqli_fetch_object($tableDB))
 		{
 			return $row;
 		}	
@@ -317,17 +317,17 @@ function urls($ar)
 	function callUrls()
 	{
 		$query = "SELECT  * FROM url ";
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
 		$result = new stdClass();
 			
 		$content = "<table width=100% class='reference'><tbody>";
 		$content .= '<tr><th>Url</th><th>Name</th><th colspan=2></th></tr>';
 	
-		if(mysql_num_rows($tableDB) > 0)
+		if(mysqli_num_rows($tableDB) > 0)
 		{
-			while($row = mysql_fetch_object($tableDB))
+			while($row = mysqli_fetch_object($tableDB))
 			{
 				$content .= '<tr><td>'.$row->Url.'</td><td>'.$row->Name.'</td><td><a href="javascript:void(0)" onclick="requestContent('."'urls'".','."'editUrl'".','.$row->Url_ID.');">Edit</a></td><td><a href="javascript:void(0)" onclick="promotionRequest('."'promotionRequest'".','."'urlStaff'".','.$row->Url_ID.','."'list'".','."'0'".');">Staff</a></td></tr>';
 			}	
@@ -354,8 +354,8 @@ function urls($ar)
 	{
 		$query = "INSERT INTO url (Url, Name) VALUES('".$var4."','".$var3."') ";	
 		
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
 		return callUrls();		
 	}	
@@ -369,8 +369,8 @@ function urls($ar)
 	{
 		$query = "UPDATE url SET Url = '".$var4."', Name = '".$var3."' WHERE Url_ID = '".$var2."' ";	
 		
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 						
 		return callUrls();			
 	}
@@ -388,8 +388,8 @@ function urls($ar)
 		$result = new stdClass();
 				
 		$query = "SELECT  url.Url, url.Name FROM staff_url, url WHERE staff_url.User_ID = $var2 AND url.Url_ID = staff_url.Url_ID ";
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 	
 		//$roles = $this->_roleList(); 
 		
@@ -400,7 +400,7 @@ function urls($ar)
 		//$content .= '<tr><th>Link</th><th></th></tr>';
 		$content .= '<tr><th>Link</th></tr>';
 		
-		while($row = mysql_fetch_object($tableDB))
+		while($row = mysqli_fetch_object($tableDB))
 		{ //
 			//$content .= '<tr><td>'.$row->Name.'</td><td><input type="button" value="Go" onclick="OpenInNewTab('.$row->Url.');" class=""></td></tr>';
 			$content .= '<tr><td><a href="'.$row->Url.'" target="_blank">'.$row->Name.'</a></td></tr>';
@@ -428,17 +428,17 @@ function urls($ar)
 		$query = "SELECT  user_detail.Mobile AS Position, url.Name AS Url, CONCAT_WS(' ', user_detail.Name, user_detail.Surname) AS Staff  
 		FROM staff_url, url, user_detail  
 		WHERE user_detail.User_ID = staff_url.User_ID AND url.Url_ID = staff_url.Url_ID ORDER BY CONCAT_WS(' ', user_detail.Name, user_detail.Surname)";
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
 		$result = new stdClass();
 			
 		$content = "<table width=100% class='reference'><tbody>";
 		$content .= '<tr><th>Staff</th><th>Position</th><th>Url</th></tr>';
 	
-		if(mysql_num_rows($tableDB) > 0)
+		if(mysqli_num_rows($tableDB) > 0)
 		{
-			while($row = mysql_fetch_object($tableDB))
+			while($row = mysqli_fetch_object($tableDB))
 			{
 				$content .= '<tr><td>'.$row->Staff.'</td><td>'.$row->Position.'</td><td>'.$row->Url.'</td></tr>';
 			}	
@@ -518,14 +518,14 @@ function urls($ar)
 		// User_ID 	Username 	Password 	User_Role_ID 
 		$query = "INSERT INTO user(Username,Password,User_Role_ID) VALUES('".$var3."','".$var4."','".$var5."') ";	
 
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 
 		if($tableDB)
 		{
-			$idDB = mysql_query("SELECT LAST_INSERT_ID() FROM user")
-					or die(mysql_error());
-				if ($id = mysql_fetch_array($idDB))
+			$idDB = mysqli_query("SELECT LAST_INSERT_ID() FROM user")
+					or die(mysqli_error());
+				if ($id = mysqli_fetch_array($idDB))
 					$_USER_ID = $id[0];	
 		}		
 			
@@ -533,8 +533,8 @@ function urls($ar)
 		// User_Detail_ID 	User_ID 	Name 	Surname 	Mobile 
 		$query = "INSERT INTO user_detail(User_ID,Name,Surname,Mobile) VALUES('".$_USER_ID."','".$var6."','".$var7."','".$var8."') ";	
 
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
 			
 			
@@ -563,14 +563,14 @@ function urls($ar)
 		// User_Detail_ID 	User_ID 	Name 	Surname 	Mobile 
 		$query = "UPDATE user_detail SET Name = '".$var6."', Surname = '".$var7."', Mobile = '".$var8."'  WHERE user_detail.User_ID = '".$var2."' ";	
 
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
 		// User_ID 	Username 	Password 	User_Role_ID 
 		$query = "UPDATE user SET Username = '".$var3."', Password = '".$var4."', User_Role_ID = '".$var5."'  WHERE user.User_ID = '".$var2."' ";	
 
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);			
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 						
 		return callStaff();	
 	}	
@@ -584,15 +584,15 @@ function urls($ar)
 		$selection = '';
 		
 		$query = "SELECT  user_detail.*,user.User_Role_ID, user.Username, user.Password FROM user_detail, user WHERE  user_detail.User_ID = user.User_ID AND user.User_ID != 4 ";
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			 
 		$roles = array(1=>'User',2=>'Admin');
 			
 		$content = "<table width=100% class='reference'><tbody>";
 		$content .= '<tr><th>Staff ID</th><th>Name</th><th>Surname</th><th>Position</th><th>Role</th><th>Username</th><th>Password</th><th colspan=2></th></tr>';		
 		
-		while($row = mysql_fetch_object($tableDB))
+		while($row = mysqli_fetch_object($tableDB))
 		{ 
 			$content .= '<tr><td>'.$row->User_ID.'</td><td>'.$row->Name.'</td><td>'.$row->Surname.'</td><td>'.$row->Mobile.'</td><td>'.$roles[$row->User_Role_ID].'</td><td>'.$row->Username.'</td><td>'.$row->Password.'</td><td><a href="javascript:void(0)" onclick="requestContent('."'staff'".','."'editStaff'".','.$row->User_ID.');">Edit</a></td><td>
 			
@@ -620,12 +620,12 @@ function urls($ar)
 	{
 		
 		$query = "SELECT  user_detail.*,user.User_Role_ID, user.Username, user.Password FROM user_detail, user WHERE  user.User_ID =  $var2 AND user_detail.User_ID = user.User_ID ";
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
 		$result = new stdClass();;
 			
-		if($row = mysql_fetch_object($tableDB))	
+		if($row = mysqli_fetch_object($tableDB))
 		{
 			$result->Username = $row->Username;
 			$result->Password = $row->Password;
@@ -644,12 +644,12 @@ function urls($ar)
    function roles()
    {
       	$query = "SELECT * FROM user_role ";
-		$tableDB = mysql_query($query)
-			or die(mysql_error().$query);	
+		$tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
 		$roles = array();
 		
-		while($row = mysql_fetch_object($tableDB))
+		while($row = mysqli_fetch_object($tableDB))
 		{
 			$roles[$row->User_Role_ID]=$row->Role;
 		}
@@ -733,15 +733,15 @@ function urls($ar)
 		//Staff_Store_ID 	User_ID 	Store_ID 	Date 
 	   $query = "SELECT * FROM staff_url WHERE Url_ID = ".$var2." AND User_ID = ". $var4 . " LIMIT 1 ";	
 		
-	   $tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+	   $tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
-	   if(!$row = mysql_fetch_object($tableDB))
+	   if(!$row = mysqli_fetch_object($tableDB))
 	   {
 		   $query = "INSERT INTO staff_url (Url_ID, User_ID, Date) VALUES(".$var2.",".$var4.",'".time()."')";	
 			
-		   $tableDB = mysql_query($query)
-				or die(mysql_error().$query);	   	
+		   $tableDB = mysqli_query($query)
+				or die(mysqli_error().$query);
 	   }
 	   return urlStaff($var2);
 	} 	
@@ -753,15 +753,15 @@ function urls($ar)
 		//Staff_Store_ID 	User_ID 	Store_ID 	Date 
 	   $query = "SELECT * FROM staff_url WHERE Url_ID = ".$var2." AND User_ID = ". $var4 . " LIMIT 1 ";	
 		
-	   $tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+	   $tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
-	   if($row = mysql_fetch_object($tableDB))
+	   if($row = mysqli_fetch_object($tableDB))
 	   {
 		   $query = "DELETE FROM staff_url WHERE Url_ID = ".$var2." AND User_ID = ".$var4;	
 			
-		   $tableDB = mysql_query($query)
-				or die(mysql_error().$query);	   	
+		   $tableDB = mysqli_query($query)
+				or die(mysqli_error().$query);
 	   }
 	   
 	   return urlStaff($var2);
@@ -780,15 +780,15 @@ function urls($ar)
 	{
 	   $query = "SELECT * FROM staff_url WHERE User_ID = ". $userID . " LIMIT 1 ";	
 		
-	   $tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+	   $tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
-	   if($row = mysql_fetch_object($tableDB))
+	   if($row = mysqli_fetch_object($tableDB))
 	   {
 		   $query = "DELETE FROM staff_url WHERE User_ID = ".$userID;	
 			
-		   $tableDB = mysql_query($query)
-				or die(mysql_error().$query);	   	
+		   $tableDB = mysqli_query($query)
+				or die(mysqli_error().$query);
 	   }		
 	}
 	
@@ -796,15 +796,15 @@ function urls($ar)
 	{
 	   $query = "SELECT * FROM user WHERE User_ID = ". $userID . " LIMIT 1 ";	
 		
-	   $tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+	   $tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
-	   if($row = mysql_fetch_object($tableDB))
+	   if($row = mysqli_fetch_object($tableDB))
 	   {
 		   $query = "DELETE FROM user WHERE User_ID = ".$userID;	
 			
-		   $tableDB = mysql_query($query)
-				or die(mysql_error().$query);	   	
+		   $tableDB = mysqli_query($query)
+				or die(mysqli_error().$query);
 	   }		
 	}
 	
@@ -812,15 +812,15 @@ function urls($ar)
 	{
 	   $query = "SELECT * FROM user_detail WHERE User_ID = ". $userID . " LIMIT 1 ";	
 		
-	   $tableDB = mysql_query($query)
-			or die(mysql_error().$query);
+	   $tableDB = mysqli_query($query)
+			or die(mysqli_error().$query);
 			
-	   if($row = mysql_fetch_object($tableDB))
+	   if($row = mysqli_fetch_object($tableDB))
 	   {
 		   $query = "DELETE FROM user_detail WHERE User_ID = ".$userID;	
 			
-		   $tableDB = mysql_query($query)
-				or die(mysql_error().$query);	   	
+		   $tableDB = mysqli_query($query)
+				or die(mysqli_error().$query);
 	   }			
 	}	
 	
